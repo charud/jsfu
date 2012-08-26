@@ -1,8 +1,78 @@
 # jsfu
 
-  Improve your Javascript fu with language extensions
+Improve your Javascript fu with language extensions
 
-## Command line
+
+## Featuers 
+
+Transpile your code with jsfu and get access to:
+
+### Automatic Continuation ###
+
+The Automatic Continuation feature will replace the `§` symbol  
+with a callback containing any code that comes below the function call.
+
+It will basically turn
+
+	var foo = bar(123, §, 123);
+	x(foo);
+	 
+into
+
+	bar(123, function(foo) { x(foo); }, 123);
+
+Another example before transcompilation:
+
+```js
+	function getSushi(piece, callback) {
+		// Lunch hour. Need to stand in line first.
+		setTimeout(function() { callback(piece); }, 5000);
+	}
+
+	var sushi = getSushi('tamago', §);
+	console.log(sushi + ' was good');
+```
+
+After transcompilation:
+
+```js
+	function getSushi(piece, callback) {
+		// Lunch hour. Need to stand in line first.
+		setTimeout(function() { callback(piece); }, 5000);
+	}
+
+	getSushi('tamago', function() {
+		console.log(sushi + ' was good');
+	});
+```
+
+#### Async Wrapping 
+
+Parallel calls are supported by encapsulating the code inside a function:
+
+Without async wrapping:
+
+	var r = A($);
+ 	var r = C($);
+ 	var r = B($);
+
+This will first run A  
+When A is completed C will run  
+When C is completed B will run  
+
+With async wrapping:
+
+ 	function runAC() {
+ 		var a = A($);
+ 	    var c = C($); 
+ 	}
+ 	runAC();
+    var b = B($);
+
+This will run A and B in parallel
+When A is completed C will run
+
+### Command line
 
 jsfu supports reading from stdin and stdout using 
 
