@@ -5,7 +5,7 @@ var fs     = require('fs')
   , pro    = require('uglify-js').uglify
 ;
 
-var code = fs.readFileSync('./bin/test.js', 'utf-8');
+var code = fs.readFileSync('./examples/sushi.js', 'utf-8');
 
 /**
  * TODO
@@ -171,7 +171,7 @@ function transformFunc(code) {
 function transformAsync(code) {
 
 	/**
-	 * match:         [matched line and all code below this line]
+	 * match:         [matched line and all lines below this line until }]
 	 * variable:      x
 	 * preFunction:   f(
 	 * postFunction:  );

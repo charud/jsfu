@@ -14,8 +14,8 @@ function getTimestamp() {
 /**
  * Fake an asynchronous request that takes 1-2 second(s):
  */
-getDelayed = (obj, callback, log) => {
-	setTimeout(function() {
+getDelayed = function(obj, callback, log) {
+	setTimeout( => {
 		if(log) {
 			console.log(getTimestamp() + colors.gray + '> ' + log + ':', obj, colors.reset);
 		}
