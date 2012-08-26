@@ -1,22 +1,21 @@
 {
-  "name": "compile2js",
+  "name": "jsfu",
   "version": "0.0.1",
-  "description": "improve your javascript code",
-  "main": "index.js",
+  "description": "Improve your Javascript fu with language extensions",
+  "keywords": ["js", "fu", "extensions", "transpiler", "async", "continuation"],
+  "author": "Charlie Rudenstål <charlie4@gmail.com>",
+  "dependencies": {
+    "uglify-js": "*"
+  },
+  "devDependencies": {
+  	"mocha": "*",
+  	"chai": "*"
+  },
   "scripts": {
     "test": "make test"
   },
+  "main": "index.js",
   "bin": {
-    "mocha": "./bin/2js"
-  },
-  "devDependencies": [
-  	"mocha",
-  	"chai",
-    "uglify-js"
-  ],
-  "repository": "",
-  "author": {
-    "name": "Charlie Rudenstål",
-    "email": "charlie4@gmail.com"
+    "jsfu": "./bin/jsfu"
   }
 }

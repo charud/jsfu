@@ -1,12 +1,12 @@
 test: 
-	@node_modules/mocha/bin/mocha -u bdd -R spec src/* -r chai
+	@node_modules/.bin/mocha -u bdd -R spec test/* -r chai
 
 test-watch:
-	@node_modules/mocha/bin/mocha -u bdd -R min src/* -w -r chai
+	@node_modules/.bin/mocha -u bdd -R min test/* -w -r chai
 
 run: 
 	clear
-	-./bin/2js
+	-./bin/jsfu
 
 watch: 
 	$(MAKE) -s run; \

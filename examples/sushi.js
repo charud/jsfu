@@ -82,7 +82,6 @@ Human.prototype.say = function(utterance) {
 
 ///// Actual logic //////////////////////////////////// 
 
-
 var alice = new Human('Alice');
 var bob = new Human('Bob');
 

@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+var fs     = require('fs')
+  , vm     = require('vm')
+  , jsfu   = require('../');
+
+/**
+ * Retrieve source code from the example
+ */
+var source = fs.readFileSync('./examples/sushi.js', 'utf-8');
+var transpiledSource = jsfu(source);
+
+/**
+ * Output the generated code and execute it
+ */
+console.log(transpiledSource);
+console.log(Array(40).join('-'));
+try {
+	vm.runInNewContext(transpiledSource, {console: console, setTimeout: setTimeout});
+} catch (e) {
+	console.log(e);
+}
