@@ -15,39 +15,39 @@ with a callback containing any code that comes below the function call.
 It will turn
 
 ```js
-	var foo = bar(123, §, 123);
-	x(foo);
+var foo = bar(123, §, 123);
+x(foo);
 ```
 
 into
 
 ```js
-	bar(123, function(foo) { x(foo); }, 123);
+bar(123, function(foo) { x(foo); }, 123);
 ```
 
 Another example before transcompilation:
 
 ```js
-	function getSushi(piece, callback) {
-		// Lunch hour. Need to stand in line first.
-		setTimeout(function() { callback(piece); }, 5000);
-	}
+function getSushi(piece, callback) {
+	// Lunch hour. Need to stand in line first.
+	setTimeout(function() { callback(piece); }, 5000);
+}
 
-	var sushi = getSushi('tamago', §);
-	console.log(sushi + ' was good');
+var sushi = getSushi('tamago', §);
+console.log(sushi + ' was good');
 ```
 
 After transcompilation:
 
 ```js
-	function getSushi(piece, callback) {
-		// Lunch hour. Need to stand in line first.
-		setTimeout(function() { callback(piece); }, 5000);
-	}
+function getSushi(piece, callback) {
+	// Lunch hour. Need to stand in line first.
+	setTimeout(function() { callback(piece); }, 5000);
+}
 
-	getSushi('tamago', function(sushi) {
-		console.log(sushi + ' was good');
-	});
+getSushi('tamago', function(sushi) {
+	console.log(sushi + ' was good');
+});
 ```
 
 #### Async Wrapping 
@@ -57,9 +57,9 @@ Parallel calls are supported by encapsulating the code inside a function:
 Without async wrapping:
 
 ```js
-	var r = A($);
- 	var r = C($);
- 	var r = B($);
+var r = A($);
+var r = C($);
+var r = B($);
 ```
 
 This will first run A  
@@ -69,12 +69,12 @@ When C is completed B will run
 With async wrapping:
 
 ```js
- 	function runAC() {
- 		var a = A($);
- 	    var c = C($); 
- 	}
- 	runAC();
-    var b = B($);
+function runAC() {
+	var a = A($);
+    var c = C($); 
+}
+runAC();
+var b = B($);
 ```
 
 This will run A and B in parallel  
@@ -90,8 +90,8 @@ jsfu supports reading from stdin and stdout using
 Example: 
 
 ```bash
-	$ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
-	function(a, b) {}
+$ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
+function(a, b) {}
 ```
 
 ## License 
