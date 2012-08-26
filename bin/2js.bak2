@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+var parser = require("../lib/parse-js")
+
+var code = "test = function() { alert('go') };"
+
+try {
+	var parsed = parser.parse(code, false);
+} catch( e ){
+	console.log("Parse error: " + e.message);
+}
+
+console.dir(parsed);
+
+module.exports = parser
