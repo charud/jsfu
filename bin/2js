@@ -142,8 +142,11 @@ function transformFunc(code) {
  *
  * 		bar(123, function(foo) { x(foo); }, 123);
  *
- * Supports wrapping:
+ * Async Wrapping
+ * --------------
  *
+ * Without async wrapping:
+ * 
  * 	 	var r = A($);
  * 	 	var r = C($);
  * 	 	var r = B($);
@@ -152,7 +155,7 @@ function transformFunc(code) {
  * When A is completed C will run
  * When C is completed B will run
  * 
- * Compare this behavior to when the async code is wrapped:
+ * With async wrapping:
  * 
  * 		function foo() {
  * 			var r = A($);
