@@ -77,15 +77,15 @@ With async wrapping:
     var b = B($);
 ```
 
-This will run A and B in parallel
+This will run A and B in parallel  
 When A is completed C will run
 
 ### Command line
 
-jsfu supports reading from stdin and stdout using 
+jsfu supports reading from stdin and stdout using  
 
-- `-s` or `--stdin` for stdin
-- `-p` or `--print` for stdout
+`-s` or `--stdin` for stdin
+`-p` or `--print` for stdout  
 
 Example: 
 
