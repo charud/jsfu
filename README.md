@@ -2,6 +2,18 @@
 
   Improve your Javascript fu with language extensions
 
+## Command line
+
+jsfu supports reading from stdin and stdout using 
+
+- `-s` or `--stdin` for stdin, and
+- `-p` or `--print` for stdout
+
+Example: 
+
+	$ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
+	function(a, b) {}
+
 ## License 
 
 (The MIT License)

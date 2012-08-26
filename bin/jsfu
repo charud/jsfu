@@ -7,14 +7,15 @@
 var fs      = require('fs')
   , vm      = require('vm')
   , program = require('commander')
+  , npath   = require('path')
   , jsfu    = require('../');
 
 program
     .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)	.usage('[options] <file ...>')
-	.option('-i, --input <path>', 'Specified input folder, defaults to current', ".")
-	.option('-o, --output <path>', 'Stores transpiled source at specified path')
+	.option('-i, --input <path>', 'Read source from this input folder')
 	.option('-s, --stdin', 'Read source from stdin')
-	.option('-p, --print', 'Prints transpiled source to stdin')
+	.option('-o, --output <path>', 'Stores transpiled source in the specified output folder')
+	.option('-p, --print', 'Prints transpiled source to stdout')
 	.option('-e, --execute', 'Executes transpiled source instead of saving it')
 	.option('--example <name>', 'Run one of the examples')
 	.option('--examples', 'Display available examples');
@@ -36,18 +37,29 @@ program.parse(process.argv);
  * Retrieve jsfu source, transpile to js and output it in 
  * any of the ways specified by the command line paramaters
  */
+var sources = [];
 
-var source = null;
-
-// Retrieve source code from stdin
-if(program.stdin) {
-	source = fs.readFileSync('/dev/stdin').toString();
+// Retrieve source code from input directory
+if(program.input) {
+	fs.readdirSync(program.input).forEach(function(file) {
+		if(npath.extname(file) != '.js') return false;		
+		var path = npath.join(program.input, file);
+		var source = fs.readFileSync(path, 'utf-8');
+		sources.push(source);
+	});
 }
 
-// Retrieve source code from Examples
+// Retrieve source from stdin
+if(program.stdin) {
+	source = fs.readFileSync('/dev/stdin').toString();
+	sources.push(source);
+}
+
+// Retrieve source from Examples
 if(program.example) {
 	try {
 		source = fs.readFileSync('./examples/' + program.example + '.js', 'utf-8');
+		sources.push(source);
 
 		// Execute the example is nothing else is specified
 		if(!program.print && !program.output) program.execute = true;
@@ -57,23 +69,30 @@ if(program.example) {
 	}
 }
 
-// Transpile source from jsfu to js
-if(!source) throw new Error('Sadly, no sign of source. jsfu demands source.');
-var transpiledSource = jsfu(source);
+// Transpile and output all sources
+for(var i in sources) {
+	var source = sources[i];
 
-// Output transpiled source to stdin
-if(program.print) {
-	console.log(transpiledSource);
-}
+	// Transpile source from jsfu to js
+	if(!source) throw new Error('Sadly, no sign of source. jsfu demands source.');
+	var transpiledSource = jsfu(source);
 
-// Execute transpiled source
-if(program.execute) {
-	try {
-		vm.runInNewContext(transpiledSource, {console: console, setTimeout: setTimeout});
-	} catch (e) {
-		console.log(e);
+	// Output transpiled source to stdin
+	if(program.print) {
+		console.log(transpiledSource);
 	}
+
+	// Execute transpiled source
+	if(program.execute) {
+		try {
+			vm.runInNewContext(transpiledSource, {console: console, setTimeout: setTimeout});
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
 }
+
 
 process.on('error', function (exception) {
 	console.log('error'); 
