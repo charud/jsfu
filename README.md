@@ -94,6 +94,32 @@ $ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
 function(a, b) {}
 ```
 
+### Compact function definitions
+
+Use an arrow to create compact function definitions
+Useful when passing a function as a parameter
+
+Turn
+
+```js
+// A parameter
+buy('sushi', (err, piece) => { eat(piece) });
+
+// Or a definition
+var onGotSushi = (err, piece) => { eat(piece) };
+```
+
+into
+
+```js
+// A parameter
+buy('sushi', function(err, piece) { eat(piece) });
+
+// Or a definition	
+onGotSushi = function(err, piece) { eat(piece) };
+```
+
+
 ## License 
 
 (The MIT License)
