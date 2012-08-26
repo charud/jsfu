@@ -8,13 +8,16 @@
 // 	console.log(r);
 // });
 
+function wrapAsync() 
+{
+	var r = writeAsync('Bob', §);
+	console.log(r);
 
-var r = writeAsync('Bob', §);
-console.log(r);
+	var r = writeAsync('After Bob', §);
+	console.log(r);
+}
 
-var r = writeAsync('After Bob', §);
-console.log(r);
-
+wrapAsync();
 var r = writeAsync('Alice', §);
 console.log(r);
 

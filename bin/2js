@@ -10,7 +10,7 @@ var code = fs.readFileSync('./bin/test.js', 'utf-8');
 /**
  * TODO
  * ----
- * Write something nice to solve:
+ * Write something nice to simplify this kind of code:
  * 	
  * 	  	code = transformArrowAlias(code);
  *	    code = transformFuncArrow(code);
@@ -43,8 +43,6 @@ var code = fs.readFileSync('./bin/test.js', 'utf-8');
  * 			  into:   alert("Hello world");
  * 		       
  */
-
-
 
 // Remove comments and their new lines
 // to make debug output a bit easier to read
@@ -143,39 +141,84 @@ function transformFunc(code) {
  * into
  *
  * 		bar(123, function(foo) { x(foo); }, 123);
- *   
+ *
+ * Supports wrapping:
+ *
+ * 	 	var r = A($);
+ * 	 	var r = C($);
+ * 	 	var r = B($);
+ *
+ * This will run A first
+ * When A is completed C will run
+ * When C is completed B will run
+ * 
+ * Compare this behavior to when the async code is wrapped:
+ * 
+ * 		function foo() {
+ * 			var r = A($);
+ * 		    var r = C($); 
+ * 		}
+ * 		foo();
+ *      var r = B($);
+ * 
+ * This will run A and B in parallell
+ * When A is completed C will run
+ * 
  */
 function transformAsync(code) {
 
-	// Step 1: Search for var x = f(§);
-	return code.replace(/var (.+) = (.+)§(.+)([.\s\S]*)/g,
-		/**
-		 * match:         [matched line and all code below this line]
-		 * variable:      x
-		 * preFunction:   f(
-		 * postFunction:  );
-		 * callbackCode:  [all code below this line]
-		 * offsetStart:   first character index of this matched line
-		 */ 
-		function(match, variable, preFunction, postFunction, callbackCode, offsetStart) {
-			
-			// Step 3: Retrieve all code below this line that should
-			// 		   be called asynchronously
-			var offsetEnd = offsetStart + match.length;
-			var callbackOffsetStart = offsetEnd - callbackCode.length;
-			var codeBelow = code.substr(callbackOffsetStart);
+	/**
+	 * match:         [matched line and all code below this line]
+	 * variable:      x
+	 * preFunction:   f(
+	 * postFunction:  );
+	 * callbackCode:  [all code below this line]
+	 * offsetStart:   first character index of this matched line
+	 */ 
+	replacer = function(match, variable, preFunction, postFunction, callbackCode, functionWrapper, contextOffsetStart) {
+		var isWrapped = (functionWrapper == "}");
 
-			// Step 4: Parse the code below recursively
-			codeBelow = transformAsync(codeBelow);
-			
-			// Step 2: Replace with f(function(x) { [...] });
-			var newCode = preFunction + 'function(' + variable + ') ' +
-						  '{' + codeBelow + '}' + 
-						  postFunction;
-			
-			return newCode;
+		// Step 2: Retrieve all code below this line that should
+		// 		   be called asynchronously
+		// var contextOffsetEnd = contextOffsetStart + match.length;
+		// var callbackOffsetStart = contextOffsetEnd - callbackCode.length;
+		var callbackOffsetStart = match.length - callbackCode.length;
+		var codeBelow = match.substring(callbackOffsetStart);
+
+		// If thie async call is wrapped in a function
+		// codeBelow will contain everything in that function
+		// below this call. Code below will also include the 
+		// end bracket } of the function. Be sure to remove that
+		if (isWrapped) {
+			codeBelow = codeBelow.slice(0, -1); 
 		}
-	);
+
+		// Step 3: Parse the code below recursively
+		codeBelow = transformAsync(codeBelow);
+		
+		// Step 4: Replace with f(function(x) { [...] });
+		var newCode = preFunction + 'function(' + variable + ') ' +
+					  '{' + codeBelow + '}' + 
+					  postFunction;
+
+		// If this async call is wrapped in a function
+		// we removed the last } of that function earlier,
+		// now add it again
+		if(isWrapped) {			
+			newCode += "}";
+		}
+
+		return newCode;
+	};
+
+
+	// Search for any var x = f(§); that are wrapped inside a function
+	code = code.replace(/var (.+) = (.+)§(.+)([.\s\S]*?)(})/g, replacer);
+
+	// Search for any var x = f($); that are not wrapped inside a function
+	code = code.replace(/var (.+) = (.+)§(.+)([.\s\S]*)/g, replacer);
+
+	return code;
 };
 
 /**
@@ -197,6 +240,7 @@ function beautify(code) {
 
 code = transformFunc(code);
 code = transformAsync(code);
+
 code = beautify(code);
 
 /**
