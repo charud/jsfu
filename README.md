@@ -84,7 +84,7 @@ When A is completed C will run
 
 jsfu supports reading from stdin and stdout using  
 
-`-s` or `--stdin` for stdin
+`-s` or `--stdin` for stdin  
 `-p` or `--print` for stdout  
 
 Example: 
