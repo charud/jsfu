@@ -15,17 +15,19 @@ with a callback containing any code that comes below the function call.
 It will turn
 
 ```js
-var foo = bar(123, §, 123);
-x(foo);
+var piece = buy('sushi', §, '$100');
+eat(piece);
 ```
 
 into
 
 ```js
-bar(123, function(foo) { x(foo); }, 123);
+buy('sushi', function(piece) { 
+	eat(piece);
+}, '$100');
 ```
 
-Another example before transcompilation:
+Another example, before transcompilation:
 
 ```js
 function getSushi(piece, callback) {
