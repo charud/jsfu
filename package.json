@@ -5,6 +5,7 @@
   "keywords": ["js", "fu", "extensions", "transpiler", "async", "continuation"],
   "author": "Charlie Rudenstål <charlie4@gmail.com>",
   "dependencies": {
+    "commander": "*",
     "uglify-js": "*"
   },
   "devDependencies": {

@@ -1,21 +1,80 @@
 #!/usr/bin/env node
-var fs     = require('fs')
-  , vm     = require('vm')
-  , jsfu   = require('../');
 
 /**
- * Retrieve source code from the example
+ * Modules dependencies
  */
-var source = fs.readFileSync('./examples/sushi.js', 'utf-8');
+
+var fs      = require('fs')
+  , vm      = require('vm')
+  , program = require('commander')
+  , jsfu    = require('../');
+
+program
+    .version(JSON.parse(fs.readFileSync(__dirname + '/../package.json', 'utf8')).version)	.usage('[options] <file ...>')
+	.option('-i, --input <path>', 'Specified input folder, defaults to current', ".")
+	.option('-o, --output <path>', 'Stores transpiled source at specified path')
+	.option('-s, --stdin', 'Read source from stdin')
+	.option('-p, --print', 'Prints transpiled source to stdin')
+	.option('-e, --execute', 'Executes transpiled source instead of saving it')
+	.option('--example <name>', 'Run one of the examples')
+	.option('--examples', 'Display available examples');
+
+program.name = "jsfu";
+
+// --examples
+
+program.on('examples', function(){
+  console.log();
+  console.log('    sushi -  Automatic continuation of async methods');  
+  console.log();
+  process.exit();
+});
+
+program.parse(process.argv);
+
+/**
+ * Retrieve jsfu source, transpile to js and output it in 
+ * any of the ways specified by the command line paramaters
+ */
+
+var source = null;
+
+// Retrieve source code from stdin
+if(program.stdin) {
+	source = fs.readFileSync('/dev/stdin').toString();
+}
+
+// Retrieve source code from Examples
+if(program.example) {
+	try {
+		source = fs.readFileSync('./examples/' + program.example + '.js', 'utf-8');
+
+		// Execute the example is nothing else is specified
+		if(!program.print && !program.output) program.execute = true;
+
+	} catch (e) {
+		throw new Error('No such example');
+	}
+}
+
+// Transpile source from jsfu to js
+if(!source) throw new Error('Sadly, no sign of source. jsfu demands source.');
 var transpiledSource = jsfu(source);
 
-/**
- * Output the generated code and execute it
- */
-console.log(transpiledSource);
-console.log(Array(40).join('-'));
-try {
-	vm.runInNewContext(transpiledSource, {console: console, setTimeout: setTimeout});
-} catch (e) {
-	console.log(e);
+// Output transpiled source to stdin
+if(program.print) {
+	console.log(transpiledSource);
 }
+
+// Execute transpiled source
+if(program.execute) {
+	try {
+		vm.runInNewContext(transpiledSource, {console: console, setTimeout: setTimeout});
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+process.on('error', function (exception) {
+	console.log('error'); 
+});
