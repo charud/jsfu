@@ -56,7 +56,7 @@ getSushi('tamago', function(sushi) {
 
 Parallel calls are supported by encapsulating the code inside a function:
 
-Without async wrapping:
+**Without async wrapping:**
 
 ```js
 var r = A($);
@@ -68,7 +68,7 @@ This will first run A
 When A is completed C will run  
 When C is completed B will run  
 
-With async wrapping:
+**With async wrapping:**
 
 ```js
 function runAC() {
@@ -89,7 +89,7 @@ jsfu supports reading from stdin and stdout using
 `-s` or `--stdin` for stdin  
 `-p` or `--print` for stdout  
 
-Example: 
+**Example:**
 
 ```bash
 $ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
