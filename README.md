@@ -121,6 +121,21 @@ buy('sushi', function(err, piece) { eat(piece) });
 onGotSushi = function(err, piece) { eat(piece) };
 ```
 
+## Known Bugs
+
+A bracket `}` symbol below an asynchronous call that's not 
+part of its wrapping function will cause an error.
+
+Example
+```js
+	function wrappingFunction() {
+		var sushi = getSushi(§);
+		sushi.eatSelf();
+		myRating = { rating: 5 } // <- this } will cause an error
+	} // <- this } will not cause an error
+```
+
+This bug will be fixed in `0.1.1` 
 
 ## License 
 

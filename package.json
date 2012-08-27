@@ -1,22 +1,25 @@
-{
-  "name": "jsfu",
-  "version": "0.0.1",
-  "description": "Improve your Javascript fu with language extensions",
-  "keywords": ["js", "fu", "extensions", "transpiler", "async", "continuation"],
-  "author": "Charlie Rudenstål <charlie4@gmail.com>",
-  "dependencies": {
-    "commander": "*",
-    "uglify-js": "*"
-  },
-  "devDependencies": {
-  	"mocha": "*",
-  	"chai": "*"
-  },
-  "scripts": {
-    "test": "make test"
-  },
-  "main": "index.js",
-  "bin": {
-    "jsfu": "./bin/jsfu"
+{ "name": "jsfu"
+, "version": "0.1.0"
+, "description": "Improve your Javascript fu with language extensions"
+, "keywords": ["js", "fu", "extensions", "transpiler", "async", "continuation"]
+, "author": "Charlie Rudenstål <charlie4@gmail.com>"
+, "repository": 
+  { "type": "git"
+  , "url" : "https://github.com/charlie-rudenstal/jsfu"
+  }
+, "dependencies": 
+  { "commander": "*"
+  , "uglify-js": "*"
+  }
+, "devDependencies": 
+  { "mocha": "*"
+  ,	"chai": "*"
+  }
+, "scripts": 
+  { "test": "make test"
+  }
+, "main": "index.js"
+, "bin": 
+  { "jsfu": "./bin/jsfu"
   }
 }
