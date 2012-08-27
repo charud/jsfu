@@ -67,7 +67,7 @@ will output
 function(a, b) {};
 ```
 
-## Featuers 
+## Extensions 
 
 ### Automatic Continuation of Async calls ###
 
