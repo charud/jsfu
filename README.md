@@ -71,7 +71,7 @@ function(a, b) {};
 
 ### Automatic Continuation of Async calls ###
 
-The Automatic Continuation feature will replace the `§` symbol  
+The Automatic Continuation feature replaces the `§` symbol  
 with a callback containing any code that comes below the function call.
 
 It will turn
