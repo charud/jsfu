@@ -159,7 +159,7 @@ Example
 	} // <- this } will not cause an error
 ```
 
-This bug will be fixed in `0.1.1` 
+This bug will be fixed in `0.1.2` 
 
 ## License 
 

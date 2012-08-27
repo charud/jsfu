@@ -1,5 +1,5 @@
 { "name": "jsfu"
-, "version": "0.1.0"
+, "version": "0.1.1"
 , "description": "Improve your Javascript fu with language extensions"
 , "keywords": ["js", "fu", "extensions", "transpiler", "async", "continuation"]
 , "author": "Charlie Rudenstål <charlie4@gmail.com>"
