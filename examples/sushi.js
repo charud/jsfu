@@ -101,9 +101,9 @@ bob.say("Let's do it in parallel!");
 lunchBreak(alice);
 lunchBreak(bob);
 
-function working(whenDone) {
-	getDelayed(null, whenDone);
-}
+// function working(whenDone) {
+// 	getDelayed(null, whenDone);
+// }
 
 /**
  * A function does not need to be asynchronous itself 
