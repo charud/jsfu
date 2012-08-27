@@ -69,8 +69,6 @@ function(a, b) {};
 
 ## Featuers 
 
-Transpile your code with jsfu and get access to:
-
 ### Automatic Continuation ###
 
 The Automatic Continuation feature will replace the `§` symbol  
