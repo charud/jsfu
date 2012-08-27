@@ -1,6 +1,6 @@
 # jsfu
 
-Improve your Javascript fu with language extensions  
+**Improve your Javascript fu with language extensions**
 
 **jsfu is a dead simple rewriter**, without any grammars, AST:s or parsers.  
 All extensions will be pluggable and it will be easy include your own.
