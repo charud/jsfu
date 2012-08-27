@@ -27,13 +27,13 @@ npm install -g jsfu
 
 ### From the command line
 
-Transpile files from `src/jsfu` to `bin/js`:
+**Transpile files from `src/jsfu` to `bin/js`:**
 
 ```bash
 $ jsfu --input src/jsfu --output bin/js
 ```
 
-Or run the included example with:
+**Or run the included example with:**
 
 ```bash
 $ jsfu example sushi
@@ -42,12 +42,10 @@ $ jsfu example sushi
 Add the `-p` parameter to see the transpiled source of the example,  
 or store it in a file with `--output``
 
-jsfu also supports reading from stdin and stdout using  
+**jsfu also supports reading from stdin and stdout using:**
 
 `-s` or `--stdin` for stdin  
 `-p` or `--print` for stdout  
-
-**Example:**
 
 ```bash
 $ echo '(a, b) => {}' | jsfu -sp | grep function
