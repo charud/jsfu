@@ -4,6 +4,43 @@ Improve your Javascript fu with language extensions
 
 This code is currently experimental.
 
+## Install
+
+```bash
+npm install jsfu
+```
+
+## Usage
+
+**From the command line**
+
+Transpile files from `src/jsfu` to `bin/js`:
+
+```bash
+$ jsfu --input src/jsfu --output bin/js
+```
+
+Or run the included example with:
+
+```bash
+$ jsfu example sushi
+```
+
+Add the `-p` parameter to see the transpiled source of the example,  
+or store it in a file with `--output``
+
+jsfu also supports reading from stdin and stdout using  
+
+`-s` or `--stdin` for stdin  
+`-p` or `--print` for stdout  
+
+**Example:**
+
+```bash
+$ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
+function(a, b) {}
+```
+
 ## Featuers 
 
 Transpile your code with jsfu and get access to:
@@ -82,20 +119,6 @@ var b = B($);
 
 This will run A and B in parallel  
 When A is completed C will run
-
-### Command line
-
-jsfu supports reading from stdin and stdout using  
-
-`-s` or `--stdin` for stdin  
-`-p` or `--print` for stdout  
-
-**Example:**
-
-```bash
-$ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
-function(a, b) {}
-```
 
 ### Compact function definitions
 
