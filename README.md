@@ -149,7 +149,7 @@ When A is completed C will run
 Use an arrow to create compact function definitions
 Useful when passing a function as a parameter
 
-Turn
+Turns
 
 ```js
 // A parameter
