@@ -42,7 +42,7 @@ $ jsfu example sushi
 Add the `-p` parameter to see the transpiled source of the example,  
 or store it in a file with `--output``
 
-**jsfu also supports reading from stdin and stdout using:**
+**jsfu also supports reading from stdin to stdout using:**
 
 `-s` or `--stdin` for stdin  
 `-p` or `--print` for stdout  
