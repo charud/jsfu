@@ -40,7 +40,7 @@ $ jsfu example sushi
 ```
 
 Add the `-p` parameter to see the transpiled source of the example,  
-or store it in a file with `--output``
+or store it in a file with `--output <directory>``
 
 **Read from stdin to stdout using**
 
