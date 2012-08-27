@@ -1,7 +1,8 @@
 # jsfu
 
-Improve your Javascript fu with language extensions
+Improve your Javascript fu with language extensions  
 
+This code is currently experimental.
 
 ## Featuers 
 
