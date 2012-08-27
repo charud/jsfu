@@ -12,7 +12,7 @@ npm install jsfu
 
 ## Usage
 
-**From the command line**
+### From the command line
 
 Transpile files from `src/jsfu` to `bin/js`:
 
@@ -39,6 +39,22 @@ jsfu also supports reading from stdin and stdout using
 ```bash
 $ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
 function(a, b) {}
+```
+
+### From node.js
+
+```js
+var jsfu = require('jsfu');
+
+var source = '(a, b) => {};';
+var transpiled = jsfu(source); 
+console.log(transpiled);
+```
+
+will output
+
+```js
+function(a, b) {};
 ```
 
 ## Featuers 
