@@ -78,14 +78,14 @@ if(program.stdin) {
 // Retrieve source from Examples
 if(program.example) {
 	try {
-		source = fs.readFileSync('./examples/' + program.example + '.js', 'utf-8');
+		source = fs.readFileSync(__dirname + '/../examples/' + program.example + '.js', 'utf-8');
 		sources.push(source);
 
 		// Execute the example is nothing else is specified
 		if(!program.print && !program.output) program.execute = true;
 
 	} catch (e) {
-		throw new Error('No such example');
+		throw new Error('No such example: ' + e.message);
 	}
 }
 

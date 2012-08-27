@@ -5,7 +5,7 @@ Improve your Javascript fu with language extensions
 **jsfu is a dead simple rewriter**, without any grammars, AST:s or parsers.  
 All extensions will be pluggable and it will be easy include your own.
 
-The current version (0.1.1) contains two extensions.  
+The current version (0.1.2) contains two extensions.  
 An interface for modifying which extensions get loaded is 
 not yet available.
 
@@ -15,6 +15,12 @@ This code is currently experimental.
 
 ```bash
 npm install jsfu
+```
+
+Or globally
+
+```bash
+npm install -g jsfu
 ```
 
 ## Usage
@@ -182,7 +188,7 @@ Example
 	} // <- this } will not cause an error
 ```
 
-This bug will be fixed in `0.1.2` 
+This bug will be fixed in `0.1.3` 
 
 ## License 
 
