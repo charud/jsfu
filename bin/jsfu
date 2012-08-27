@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 
 /**
+ * jsfu
+ * Copyright(c) 2012 Charlie Rudenstål <charlie4@gmail.com>
+ * MIT Licensed 
+ */
+
+/**
  * Modules dependencies
  */
 
@@ -17,10 +23,17 @@ program
 	.option('-o, --output <path>', 'Stores transpiled source in the specified output folder')
 	.option('-p, --print', 'Prints transpiled source to stdout')
 	.option('-e, --execute', 'Executes transpiled source instead of saving it')
+	.option('--postfix', 'Add postfix to filenames of transpiled sources')
 	.option('--example <name>', 'Run one of the examples')
 	.option('--examples', 'Display available examples');
 
 program.name = "jsfu";
+
+// Show help if no arguments were supplied
+if (process.argv.length < 3) { 
+	process.stdout.write(program.helpInformation());
+	process.exit(0);      
+}
 
 // --examples
 
@@ -32,6 +45,13 @@ program.on('examples', function(){
 });
 
 program.parse(process.argv);
+
+// Add a default postfix to the filenames if the input directory if none specified
+// is same as the output directory, to avoid overwriting input files.
+var areInputOutputSame = npath.relative(program.input, program.output) == "";
+if(areInputOutputSame && !program.postfix) {
+	program.postfix = ".out.js";
+}
 
 /**
  * Retrieve jsfu source, transpile to js and output it in 
@@ -45,7 +65,7 @@ if(program.input) {
 		if(npath.extname(file) != '.js') return false;		
 		var path = npath.join(program.input, file);
 		var source = fs.readFileSync(path, 'utf-8');
-		sources.push(source);
+		sources[file] = source;
 	});
 }
 
@@ -79,7 +99,17 @@ for(var i in sources) {
 
 	// Output transpiled source to stdin
 	if(program.print) {
-		console.log(transpiledSource);
+		process.stdout.write(transpiledSource);
+	}
+
+	// Output transpiled source to a output folder
+	if(program.output) {
+		var filename = i;
+		var path = npath.join(program.output, filename);
+		if(program.postfix) path = path + program.postfix;
+
+		console.log('Writing ', path);
+		fs.writeFileSync(path, transpiledSource);
 	}
 
 	// Execute transpiled source
@@ -90,9 +120,7 @@ for(var i in sources) {
 			console.log(e);
 		}
 	}
-
 }
-
 
 process.on('error', function (exception) {
 	console.log('error'); 

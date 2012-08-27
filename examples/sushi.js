@@ -1,4 +1,10 @@
 /**
+ * jsfu
+ * Copyright(c) 2012 Charlie Rudenstål <charlie4@gmail.com>
+ * MIT Licensed 
+ */
+
+/**
  * Buying sushi with Alice and Bob
  * -------------------------------
  * Demonstrates asynchronous requests 
