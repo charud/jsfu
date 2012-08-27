@@ -56,7 +56,6 @@ function(a, b) {}
 
 ```js
 var jsfu = require('jsfu');
-
 var source = '(a, b) => {};';
 var transpiled = jsfu(source); 
 console.log(transpiled);
