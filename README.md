@@ -50,7 +50,7 @@ jsfu also supports reading from stdin and stdout using
 **Example:**
 
 ```bash
-$ echo '(a, b) => {}' | ./bin/jsfu -sp | grep function
+$ echo '(a, b) => {}' | jsfu -sp | grep function
 function(a, b) {}
 ```
 
